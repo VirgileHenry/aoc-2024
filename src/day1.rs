@@ -36,6 +36,19 @@ pub fn solve_part1(input: &Input) -> u32 {
         .sum()
 }
 
+#[aoc_runner_derive::aoc(day1, part2)]
+pub fn solve_part2(input: &Input) -> u32 {
+    
+    // precompute occurences in map
+    let mut map = Box::new([0u32; 99999]);
+    for right in input.rights.iter() {
+        map[*right as usize] += 1;
+    }
+    
+    input.lefts.iter().map(|left| *left * map[*left as usize]).sum()
+}
+
+/*
 #[aoc_runner_derive::aoc(day1, part1, FlatArr)]
 pub fn solve_part1_flatarr(input: &Input) -> u32 {
     let mut lefts = [0u32; 99999];
@@ -89,15 +102,4 @@ pub fn solve_part1_btreemap(input: &Input) -> u32 {
         .map(|(left, right)| left.abs_diff(right))
         .sum()
 }
-
-#[aoc_runner_derive::aoc(day1, part2)]
-pub fn solve_part2(input: &Input) -> u32 {
-    
-    // precompute occurences in map
-    let mut map = Box::new([0u32; 99999]);
-    for right in input.rights.iter() {
-        map[*right as usize] += 1;
-    }
-
-    input.lefts.iter().map(|left| *left * map[*left as usize]).sum()
-}
+ */
