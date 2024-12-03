@@ -114,6 +114,44 @@ pub fn parallelize<D: Display + std::ops::Add<Output = D> + Send + std::iter::Su
 }
 
 
+pub struct Bytes<'a> {
+    _m: &'a (),
+    start_ptr: *mut u8,
+    end_ptr: *mut u8,
+}
+
+impl<'a> Bytes<'a> {
+    pub unsafe fn new(input: &[u8]) -> Bytes {
+        Bytes {
+            _m: &(),
+            start_ptr: input.as_ptr() as *mut u8,
+            end_ptr: input.as_ptr().offset(input.len() as isize) as *mut u8,
+        }
+    }
+
+    #[inline(always)]
+    pub unsafe fn advance(&mut self, offset: usize) {
+        self.start_ptr = unsafe { self.start_ptr.offset(offset as isize) }
+    }
+    
+    #[inline(always)]
+    pub unsafe fn len(&self) -> usize {
+        self.end_ptr.offset_from(self.start_ptr) as usize
+    }
+}
+
+impl<'a> std::ops::Index<usize> for Bytes<'a> {
+    type Output = u8;
+    #[inline(always)]
+    fn index(&self, index: usize) -> &Self::Output {
+        unsafe {
+            &mut *(self.start_ptr.offset(index as isize))
+        }
+    }
+}
+
+
+
 #[cfg(test)]
 mod test {
     use super::slice_iter;
