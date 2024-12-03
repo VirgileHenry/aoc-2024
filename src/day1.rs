@@ -48,7 +48,6 @@ pub fn solve_part2(input: &Input) -> u32 {
     input.lefts.iter().map(|left| *left * map[*left as usize]).sum()
 }
 
-/*
 #[aoc_runner_derive::aoc(day1, part1, FlatArr)]
 pub fn solve_part1_flatarr(input: &Input) -> u32 {
     let mut lefts = [0u32; 99999];
@@ -102,4 +101,11 @@ pub fn solve_part1_btreemap(input: &Input) -> u32 {
         .map(|(left, right)| left.abs_diff(right))
         .sum()
 }
- */
+
+pub fn part1(input: &[u8]) -> u32 {
+    solve_part1(&input_generator(input))
+}
+
+pub fn part2(input: &[u8]) -> u32 {
+    solve_part2(&input_generator(input))
+}
