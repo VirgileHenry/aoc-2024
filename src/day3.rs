@@ -38,7 +38,7 @@ pub fn part2_regex(input: &str) -> u32 {
         .sum()
 }
 
-const MULP: u32 = (('m' as u32) << 3) + (('u' as u32) << 2) + (('l' as u32) << 1) + (('(' as u32) << 0);
+const MULP: u32 = (('m' as u32) << 24) + (('u' as u32) << 16) + (('l' as u32) << 8) + (('(' as u32) << 0);
 const MULTP_LEN: usize = 8;
 
 const JUMP_TABLE_P1: [usize; 256] = [
@@ -66,7 +66,7 @@ pub fn part1_rabbit(input: &[u8]) -> u32 {
         }
         else
         {
-            let start = ((input[0] as u32) << 3) +  ((input[1] as u32) << 2) +  ((input[2] as u32) << 1) +  ((input[3] as u32) << 0);
+            let start = ((input[0] as u32) << 24) +  ((input[1] as u32) << 16) +  ((input[2] as u32) << 8) +  ((input[3] as u32) << 0);
             if start != MULP {
                 input = &input[1..];
                 continue;
@@ -104,9 +104,9 @@ pub fn part1_rabbit(input: &[u8]) -> u32 {
     result
 }
 
-const DOPP: u32 = (('d' as u32) << 3) + (('o' as u32) << 2) + (('(' as u32) << 1) + ((')' as u32) << 0);
-const DONTPP_B: u32 = (('d' as u32) << 3) + (('o' as u32) << 2) + (('n' as u32) << 1) + (('\'' as u32) << 0);
-const DONTPP_S: u32 = (('t' as u32) << 2) + (('(' as u32) << 1) + ((')' as u32) << 0);
+const DOPP: u32 = (('d' as u32) << 24) + (('o' as u32) << 16) + (('(' as u32) << 8) + ((')' as u32) << 0);
+const DONTPP_B: u32 = (('d' as u32) << 24) + (('o' as u32) << 16) + (('n' as u32) << 8) + (('\'' as u32) << 0);
+const DONTPP_S: u32 = (('t' as u32) << 16) + (('(' as u32) << 8) + ((')' as u32) << 0);
 
 const DO_LEN: usize = 4;
 const DONT_LEN: usize = 7;
@@ -149,8 +149,8 @@ pub fn part2_rabbit(input: &[u8]) -> u32 {
         }
         else
         {
-            let start_b = ((input[0] as u32) << 3) + ((input[1] as u32) << 2) + ((input[2] as u32) << 1) + ((input[3] as u32) << 0);
-            let start_s = ((input[4] as u32) << 2) +  ((input[5] as u32) << 1) + ((input[6] as u32) << 0);
+            let start_b = ((input[0] as u32) << 24) + ((input[1] as u32) << 16) + ((input[2] as u32) << 8) + ((input[3] as u32) << 0);
+            let start_s = ((input[4] as u32) << 16) +  ((input[5] as u32) << 8) + ((input[6] as u32) << 0);
 
             match (count_muls, start_b, start_s) {
                 (true, DONTPP_B, DONTPP_S) => {
